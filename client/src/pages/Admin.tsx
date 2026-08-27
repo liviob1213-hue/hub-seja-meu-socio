@@ -24,6 +24,7 @@ import {
 } from "../lib/catalog";
 import { trpc } from "../lib/trpc";
 import { useAuth } from "../_core/hooks/useAuth";
+import { upload } from "@vercel/blob/client";
 
 type FormData = {
   name: string;
@@ -50,20 +51,10 @@ const emptyForm: FormData = {
 };
 const MAX_FILE_MB = 25;
 
-function readFileAsBase64(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result).split(",")[1] ?? "");
-    reader.onerror = () => reject(new Error("Não foi possível ler o arquivo."));
-    reader.readAsDataURL(file);
-  });
-}
-
 export default function Admin() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const utils = trpc.useUtils();
   const projectsQuery = trpc.projects.list.useQuery(undefined, { enabled: isAuthenticated });
-  const uploadMutation = trpc.projects.uploadMedia.useMutation();
   const createMutation = trpc.projects.create.useMutation({ onSuccess: () => utils.projects.list.invalidate() });
   const deleteMutation = trpc.projects.delete.useMutation({ onSuccess: () => utils.projects.list.invalidate() });
   const [form, setForm] = useState<FormData>(emptyForm);
@@ -90,18 +81,17 @@ export default function Admin() {
     try {
       setUploading(slot);
       setError("");
-      const result = await uploadMutation.mutateAsync({
-        slot,
-        filename: file.name,
-        mimeType: file.type,
-        base64: await readFileAsBase64(file),
+      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+      const result = await upload(`projects/${slot === "cover" ? "covers" : "videos"}/${Date.now()}-${cleanName}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/upload",
       });
       if (slot === "cover") {
         updateForm("coverUrl", result.url);
-        updateForm("coverKey", result.key);
+        updateForm("coverKey", result.pathname);
       } else {
         updateForm("videoUrl", result.url);
-        updateForm("videoKey", result.key);
+        updateForm("videoKey", result.pathname);
       }
       setMessage(slot === "cover" ? "Capa enviada e pronta para o projeto." : "Vídeo enviado e pronto para publicação.");
     } catch (uploadError) {

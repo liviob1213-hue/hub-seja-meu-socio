@@ -6,15 +6,7 @@
   "outputDirectory": "dist/public",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://sejameusocio-sepfqlmq.manus.space/api/:path*"
-    },
-    {
-      "source": "/manus-storage/:path*",
-      "destination": "https://sejameusocio-sepfqlmq.manus.space/manus-storage/:path*"
-    },
-    {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ],

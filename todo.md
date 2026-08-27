@@ -28,9 +28,23 @@
 - [x] Configurar o build e as rotas para compatibilidade com a Vercel.
 - [ ] Validar a configuração e sincronizar a correção no GitHub.
 - [ ] Confirmar o catálogo, a conta e os uploads pela Vercel quando o backend remoto estiver disponível.
-- [ ] Converter a configuração atual para SPA na Vercel, sem encaminhamento ao serviço externo.
-- [ ] Criar backend serverless da Vercel para autenticação, projetos e mídia.
+- [x] Converter a configuração atual para SPA na Vercel, sem encaminhamento ao serviço externo.
+- [x] Criar backend serverless da Vercel para autenticação, projetos e mídia.
 - [ ] Configurar persistência e armazenamento próprios da Vercel para dados e uploads.
 - [ ] Validar o deploy Vercel com catálogo, login e mídia funcionando de ponta a ponta.
+- [x] Diagnosticar a falha de login administrativo e a ausência de projetos na Vercel.
+- [x] Substituir o encaminhamento ao backend Manus por API serverless própria da Vercel.
+- [ ] Configurar banco de dados e armazenamento para o backend da Vercel.
+- [ ] Validar cadastro, login, catálogo e upload na URL publicada da Vercel.
 - [x] Corrigir o carregamento da logo na versão publicada pela Vercel.
 - [ ] Validar a logo após o novo deploy e sincronizar a correção no GitHub.
+- [x] Remover os rewrites de API e mídia para o domínio Manus do `vercel.json`.
+- [x] Criar uma função tRPC serverless própria da Vercel com autenticação por e-mail/senha e catálogo persistente no Neon Postgres.
+- [x] Migrar o upload de capas e vídeos para envio direto e autenticado ao Vercel Blob.
+- [x] Eliminar referências residuais a `/manus-storage` no frontend publicado.
+- [x] Validar localmente os contratos da API Vercel, compilação e testes automatizados.
+- [ ] Conectar Neon, Vercel Blob e segredos no projeto Vercel após autorização do usuário.
+- [ ] Publicar a migração no repositório GitHub e validar o fluxo completo no deploy Vercel.
+- [ ] Provisionar o Neon no projeto Vercel correto e testar, no runtime real, cadastro, login, catálogo, criação e exclusão de projetos.
+- [ ] Provisionar o Vercel Blob no projeto Vercel correto e testar uploads autenticados de capa e vídeo pela rota `/api/upload`.
+- [ ] Confirmar a rota serverless `/api/trpc` e os cookies de sessão no deploy Vercel após a criação dos recursos.

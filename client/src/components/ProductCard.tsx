@@ -9,7 +9,8 @@ export function ProductCard({ project, index = 0 }: { project: CatalogProject; i
       <div className="product-card__media">
         {project.mediaKind === "video" && mediaUrl ? <video src={mediaUrl} poster={project.coverUrl} controls preload="metadata" /> : null}
         {project.mediaKind === "iframe" && mediaUrl ? <iframe src={mediaUrl} title={`Vídeo do projeto ${project.name}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen /> : null}
-        {project.mediaKind === "image" ? <img src={project.coverUrl} alt="" loading="lazy" /> : null}
+        {project.mediaKind === "image" && project.coverUrl ? <img src={project.coverUrl} alt="" loading="lazy" /> : null}
+        {project.mediaKind === "image" && !project.coverUrl ? <div className="product-card__fallback" aria-hidden="true" /> : null}
         <span className={`product-card__badge product-card__badge--${project.kind}`}>{project.kind === "free" ? "GRATUITO" : "PAGO"}</span>
         {project.mediaKind !== "image" && <span className="product-card__play"><Play size={16} fill="currentColor" /></span>}
       </div>
