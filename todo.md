@@ -27,3 +27,10 @@
 - [x] Diagnosticar a entrega incorreta do código do servidor pela Vercel.
 - [x] Configurar o build e as rotas para compatibilidade com a Vercel.
 - [ ] Validar a configuração e sincronizar a correção no GitHub.
+- [ ] Confirmar o catálogo, a conta e os uploads pela Vercel quando o backend remoto estiver disponível.
+- [ ] Converter a configuração atual para SPA na Vercel, sem encaminhamento ao serviço externo.
+- [ ] Criar backend serverless da Vercel para autenticação, projetos e mídia.
+- [ ] Configurar persistência e armazenamento próprios da Vercel para dados e uploads.
+- [ ] Validar o deploy Vercel com catálogo, login e mídia funcionando de ponta a ponta.
+- [x] Corrigir o carregamento da logo na versão publicada pela Vercel.
+- [ ] Validar a logo após o novo deploy e sincronizar a correção no GitHub.
