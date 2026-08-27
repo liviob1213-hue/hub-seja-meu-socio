@@ -22,3 +22,5 @@
 - [x] Validar no navegador a publicação completa de projeto com vídeo enviado pelo formulário administrativo.
 - [x] Registrar visualmente mensagens de erro e sucesso do formulário em desktop e mobile.
 - [x] Garantir mensagens de validação próprias do painel ao tentar publicar campos obrigatórios incompletos.
+- [ ] Criar um repositório privado no GitHub para o Hub Seja Meu Sócio.
+- [ ] Enviar o código atual e confirmar a sincronização no repositório remoto.
