@@ -19,3 +19,17 @@
 A direção **Vitrine de Impacto** foi preservada na implementação: tipografia condensada, contraste vermelho/preto, sombras duplas nos cards e estrutura lateralizada em desktop. A análise visual independente recomendou preservar esse sistema e não apontou alterações necessárias.
 
 O item “Guia de Operação” foi usado apenas para validar a publicação local e será removido do estado de teste antes da entrega.
+
+## Revisão de projetos e autenticação
+
+| Área | Verificação | Resultado |
+|---|---|---|
+| Página principal | Navegação pública sem atalho para área administrativa | Aprovado |
+| Painel administrativo | Acesso autenticado, identificação de conta e saída de sessão | Aprovado visualmente |
+| Cadastro de projetos | Controles para capa, vídeo enviado e vídeo externo | Disponíveis no formulário |
+| Segurança | Hash de senha, sessão assinada e encerramento das sessões | Cobertos por testes automatizados |
+| Formulário de mídia | Seletores de capa, vídeo enviado e vídeo externo no painel autenticado | Renderizados e disponíveis |
+| Home mobile | Navegação reduzida a Projetos e Como funciona, sem acesso administrativo | Aprovado |
+| Navegação pública | A home exibe somente Projetos, Como funciona e Explorar projetos; sem botão de área administrativa | Aprovado |
+| Painel proprietário | Conta autenticada exibida, com ação de saída de sessão disponível | Aprovado |
+| Seletor de arquivo | Controle visível “Escolher arquivo” para imagem de capa no painel autenticado | Aprovado |
