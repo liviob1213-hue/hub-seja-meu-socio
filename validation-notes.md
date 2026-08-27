@@ -33,3 +33,22 @@ O item “Guia de Operação” foi usado apenas para validar a publicação loc
 | Navegação pública | A home exibe somente Projetos, Como funciona e Explorar projetos; sem botão de área administrativa | Aprovado |
 | Painel proprietário | Conta autenticada exibida, com ação de saída de sessão disponível | Aprovado |
 | Seletor de arquivo | Controle visível “Escolher arquivo” para imagem de capa no painel autenticado | Aprovado |
+| Conta por e-mail e senha | Cadastro, sessão assinada, perfil administrador na primeira conta e logout | Aprovado em fluxo real |
+| Publicação com mídia | Envio de capa persistente, cadastro de projeto e presença posterior no catálogo público | Aprovado em fluxo real |
+| Limpeza de validação | Conta e projeto temporários removidos após o teste | Aprovado |
+| Bloqueio pós-logout | Após sair da conta, a rota /admin passou a exibir a tela de login e criação de conta | Aprovado visualmente |
+| Cadastro visual | Aba “Criar conta” exibe nome, e-mail, senha e confirmação de senha | Aprovado visualmente |
+| Cadastro de conta | Campos de nome e e-mail aceitaram o preenchimento no fluxo visual | Aprovado visualmente |
+| Senha e confirmação | Os dois campos de senha aceitaram o preenchimento no formulário visual | Aprovado visualmente |
+| Criação de conta completa | Envio do formulário autenticou a conta de teste e abriu o painel administrativo com perfil administrador | Aprovado visualmente |
+| Upload de capa visual | Seletor aceitou a imagem, exibiu a prévia e confirmou “Capa enviada e pronta para o projeto” | Aprovado visualmente |
+| Persistência de capa | A capa enviada permaneceu selecionada ao navegar pelo formulário administrativo | Aprovado visualmente |
+| Formato de vídeo | Ao selecionar “Vídeo enviado”, o painel exibiu o seletor de vídeo de apresentação | Aprovado visualmente |
+| Upload de vídeo visual | Seletor aceitou o vídeo, exibiu a prévia e confirmou “Vídeo enviado e pronto para publicação” | Aprovado visualmente |
+| Dados de publicação | Campos de nome, descrição, tipo, valor e link permaneceram acessíveis após o envio de mídia | Aprovado visualmente |
+| Sessão durante a validação | Após recarregar o painel, a conta de teste permaneceu autenticada e o painel foi exibido normalmente | Aprovado visualmente |
+| Painel após upload | A sessão autenticada e o formulário permaneceram estáveis durante a preparação da publicação com vídeo | Aprovado visualmente |
+| Login manual | As credenciais temporárias foram enviadas pela tela de entrada e o painel administrativo foi reaberto | Aprovado visualmente |
+| Validação de formulário | Ao publicar sem dados e sem capa, o painel exibiu “Preencha os dados do projeto e envie uma imagem de capa antes de publicar” | Aprovado visualmente |
+| Projeto com vídeo no catálogo | Projeto temporário com vídeo enviado apareceu no catálogo público com quatro itens durante a validação | Aprovado visualmente |
+| Limpeza final | Conta e projeto temporários com vídeo foram removidos ao término da validação | Aprovado |

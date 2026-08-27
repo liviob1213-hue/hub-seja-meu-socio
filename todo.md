@@ -12,6 +12,13 @@
 - [x] Adicionar login e sessão segura com e-mail e senha.
 - [x] Remover o botão e o link de área administrativa da página principal.
 - [x] Validar cadastro, login, logout e proteção do painel administrativo.
-- [ ] Validar no navegador a criação de conta por e-mail e senha, login, logout e novo bloqueio de /admin.
-- [ ] Validar envio de capa e vídeo, publicação de um projeto de teste e exibição no catálogo público.
-- [ ] Validar novamente as mensagens de sucesso e falha do cadastro administrativo em desktop e mobile.
+- [x] Validar no navegador a criação de conta por e-mail e senha, login, logout e novo bloqueio de /admin.
+- [x] Validar envio de capa e vídeo, publicação de um projeto de teste e exibição no catálogo público.
+- [x] Validar novamente as mensagens de sucesso e falha do cadastro administrativo em desktop e mobile.
+- [x] Validar visualmente a criação de conta, login, logout e bloqueio de /admin por e-mail e senha.
+- [x] Validar visualmente upload de vídeo e publicação de projeto com mídia no catálogo público.
+- [x] Validar visualmente mensagens de sucesso e erro do cadastro em desktop e mobile.
+- [x] Validar no navegador um login manual por e-mail e senha após logout e o novo bloqueio de /admin.
+- [x] Validar no navegador a publicação completa de projeto com vídeo enviado pelo formulário administrativo.
+- [x] Registrar visualmente mensagens de erro e sucesso do formulário em desktop e mobile.
+- [x] Garantir mensagens de validação próprias do painel ao tentar publicar campos obrigatórios incompletos.

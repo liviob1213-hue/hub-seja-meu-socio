@@ -1,4 +1,4 @@
-import { count, desc, eq } from "drizzle-orm";
+import { count, desc, eq, isNotNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, projects, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -106,7 +106,7 @@ export async function getUserByEmail(email: string) {
 export async function createPasswordUser(input: { name: string; email: string; passwordHash: string }) {
   const db = await getDb();
   if (!db) throw new Error("Banco de dados indisponível. Tente novamente em instantes.");
-  const [totals] = await db.select({ value: count() }).from(users);
+  const [totals] = await db.select({ value: count() }).from(users).where(isNotNull(users.passwordHash));
   const role = totals?.value === 0 ? "admin" : "user";
   const result = await db.insert(users).values({
     openId: `email:${crypto.randomUUID()}`,
