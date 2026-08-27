@@ -24,3 +24,6 @@
 - [x] Garantir mensagens de validação próprias do painel ao tentar publicar campos obrigatórios incompletos.
 - [x] Criar um repositório privado no GitHub para o Hub Seja Meu Sócio.
 - [x] Enviar o código atual e confirmar a sincronização no repositório remoto.
+- [x] Diagnosticar a entrega incorreta do código do servidor pela Vercel.
+- [x] Configurar o build e as rotas para compatibilidade com a Vercel.
+- [ ] Validar a configuração e sincronizar a correção no GitHub.
