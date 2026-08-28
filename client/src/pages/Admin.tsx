@@ -185,3 +185,5 @@ export default function Admin() {
     </section>
   </main>;
 }
+
+// Trigger frontend rebuild for VITE_ env vars
