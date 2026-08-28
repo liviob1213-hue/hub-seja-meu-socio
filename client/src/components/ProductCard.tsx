@@ -4,8 +4,22 @@ import { formatCurrency, type CatalogProject } from "../lib/catalog";
 
 export function ProductCard({ project, index = 0 }: { project: CatalogProject; index?: number }) {
   const mediaUrl = project.mediaKind === "video" ? project.videoUrl : project.mediaKind === "iframe" ? project.iframeUrl : project.coverUrl;
+  
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    // Don't trigger card click if user is interacting with video, iframe, or the footer link
+    if (target.tagName === 'VIDEO' || target.tagName === 'IFRAME' || target.tagName === 'A' || target.closest('a')) {
+      return;
+    }
+    window.open(project.projectUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <article className="product-card" style={{ "--stagger": `${index * 55}ms` } as React.CSSProperties}>
+    <article 
+      className="product-card" 
+      style={{ "--stagger": `${index * 55}ms`, cursor: "pointer" } as React.CSSProperties}
+      onClick={handleCardClick}
+    >
       <div className="product-card__media">
         {project.mediaKind === "video" && mediaUrl ? <video src={mediaUrl} poster={project.coverUrl} controls preload="metadata" /> : null}
         {project.mediaKind === "iframe" && mediaUrl ? <iframe src={mediaUrl} title={`Vídeo do projeto ${project.name}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen /> : null}
