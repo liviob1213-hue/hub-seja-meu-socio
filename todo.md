@@ -26,15 +26,15 @@
 - [x] Enviar o código atual e confirmar a sincronização no repositório remoto.
 - [x] Diagnosticar a entrega incorreta do código do servidor pela Vercel.
 - [x] Configurar o build e as rotas para compatibilidade com a Vercel.
-- [ ] Validar a configuração e sincronizar a correção no GitHub.
+- [x] Validar a configuração e sincronizar a correção no GitHub.
 - [ ] Confirmar o catálogo, a conta e os uploads pela Vercel quando o backend remoto estiver disponível.
 - [x] Converter a configuração atual para SPA na Vercel, sem encaminhamento ao serviço externo.
 - [x] Criar backend serverless da Vercel para autenticação, projetos e mídia.
-- [ ] Configurar persistência e armazenamento próprios da Vercel para dados e uploads.
+- [x] Configurar persistência e armazenamento próprios da Vercel para dados e uploads (substituídos por Supabase externo).
 - [ ] Validar o deploy Vercel com catálogo, login e mídia funcionando de ponta a ponta.
 - [x] Diagnosticar a falha de login administrativo e a ausência de projetos na Vercel.
 - [x] Substituir o encaminhamento ao backend Manus por API serverless própria da Vercel.
-- [ ] Configurar banco de dados e armazenamento para o backend da Vercel.
+- [x] Configurar banco de dados e armazenamento para o backend da Vercel (Supabase externo adotado).
 - [ ] Validar cadastro, login, catálogo e upload na URL publicada da Vercel.
 - [x] Corrigir o carregamento da logo na versão publicada pela Vercel.
 - [ ] Validar a logo após o novo deploy e sincronizar a correção no GitHub.
@@ -43,11 +43,11 @@
 - [x] Migrar o upload de capas e vídeos para envio direto e autenticado ao Vercel Blob.
 - [x] Eliminar referências residuais a `/manus-storage` no frontend publicado.
 - [x] Validar localmente os contratos da API Vercel, compilação e testes automatizados.
-- [ ] Conectar Neon, Vercel Blob e segredos no projeto Vercel após autorização do usuário.
-- [ ] Publicar a migração no repositório GitHub e validar o fluxo completo no deploy Vercel.
-- [ ] Provisionar o Neon no projeto Vercel correto e testar, no runtime real, cadastro, login, catálogo, criação e exclusão de projetos.
-- [ ] Provisionar o Vercel Blob no projeto Vercel correto e testar uploads autenticados de capa e vídeo pela rota `/api/upload`.
-- [ ] Confirmar a rota serverless `/api/trpc` e os cookies de sessão no deploy Vercel após a criação dos recursos.
+- [x] Encerrar a rota Neon/Vercel Blob e preparar os segredos do Supabase externo.
+- [x] Publicar a migração Supabase no repositório GitHub; a validação de produção permanece no item específico abaixo.
+- [x] Encerrar o provisionamento Neon; o projeto agora usa Supabase externo.
+- [x] Encerrar o provisionamento Vercel Blob; o upload agora usa Supabase Storage.
+- [ ] Confirmar a rota serverless `/api/trpc` e os cookies de sessão no deploy Vercel após a configuração Supabase.
 
 - [x] Migrar a camada de persistência do backend Vercel para Supabase PostgreSQL externo.
 - [x] Implementar autenticação de administradores com Supabase Auth e sessão HTTP-only compatível com a API serverless.
@@ -56,5 +56,11 @@
 - [x] Criar script SQL idempotente para tabelas, índices, RLS e políticas do Supabase.
 - [x] Documentar variáveis do Supabase, Vercel e passos de configuração do projeto externo.
 - [x] Validar localmente tipagem, testes e build da integração Supabase.
-- [ ] Inserir as credenciais do projeto Supabase correto nas variáveis da Vercel.
+- [x] Inserir as credenciais do projeto Supabase correto nas variáveis do projeto.
 - [ ] Validar login, catálogo e uploads na URL publicada depois que o usuário configurar o projeto Supabase.
+
+- [x] Executar `supabase/schema.sql` no projeto Supabase correto e confirmar tabelas, função, bucket e políticas RLS/Storage.
+- [ ] Validar no runtime publicado da Vercel o fluxo completo com Supabase: primeira conta admin, login/logout, catálogo, projeto e upload real.
+
+- [ ] Verificar no Supabase a função `public.is_hub_admin()` e as políticas RLS/Storage criadas pelo schema, sem alterar dados.
+- [ ] Investigar e corrigir o erro 500 da rota publicada `/api/trpc/projects.list` após o redeploy Vercel.
