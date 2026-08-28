@@ -64,3 +64,8 @@
 
 - [ ] Verificar no Supabase a função `public.is_hub_admin()` e as políticas RLS/Storage criadas pelo schema, sem alterar dados.
 - [ ] Investigar e corrigir o erro 500 da rota publicada `/api/trpc/projects.list` após o redeploy Vercel.
+
+- [x] Corrigir o parsing de respostas não-JSON retornadas pelas funções de autenticação na Vercel.
+- [x] Garantir respostas JSON consistentes para register/login e mensagens úteis do Supabase Auth.
+- [x] Adicionar teste para falha de autenticação com resposta textual ou HTML.
+- [ ] Validar cadastro/login no deploy Vercel após o novo redeploy.

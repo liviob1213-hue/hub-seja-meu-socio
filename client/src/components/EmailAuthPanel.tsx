@@ -37,7 +37,10 @@ export function EmailAuthPanel() {
         : await loginMutation.mutateAsync({ email: email.trim(), password }));
       await utils.auth.me.invalidate();
     } catch (authError) {
-      setError(authError instanceof Error ? authError.message : "Não foi possível concluir o acesso.");
+      const message = authError instanceof Error ? authError.message : "Não foi possível concluir o acesso.";
+      setError(message.includes("Unexpected token") || message.includes("not valid JSON")
+        ? "A API de autenticação retornou uma resposta inválida. Faça um novo deploy e confirme as variáveis do Supabase na Vercel."
+        : message);
     }
   }
 
