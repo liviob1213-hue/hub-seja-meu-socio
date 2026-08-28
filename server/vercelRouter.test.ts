@@ -1,6 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { EMAIL_SESSION_COOKIE } from "./passwordAuth";
-import { appRouter } from "./vercelRouter";
+import { appRouter, SESSION_COOKIE } from "./vercelRouter";
 
 beforeAll(() => {
   process.env.JWT_SECRET = "chave-de-teste-da-api-vercel";
@@ -16,7 +15,7 @@ describe("rotas tRPC independentes da Vercel", () => {
     });
 
     await expect(caller.auth.logout()).resolves.toEqual({ success: true });
-    expect(resHeaders.get("set-cookie")).toContain(`${EMAIL_SESSION_COOKIE}=`);
+    expect(resHeaders.get("set-cookie")).toContain(`${SESSION_COOKIE}=`);
     expect(resHeaders.get("set-cookie")).toContain("HttpOnly");
     expect(resHeaders.get("set-cookie")).toContain("Max-Age=0");
   });

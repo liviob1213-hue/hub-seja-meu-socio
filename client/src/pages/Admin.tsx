@@ -23,8 +23,8 @@ import {
   type ProjectKind,
 } from "../lib/catalog";
 import { trpc } from "../lib/trpc";
+import { supabase } from "../lib/supabase";
 import { useAuth } from "../_core/hooks/useAuth";
-import { upload } from "@vercel/blob/client";
 
 type FormData = {
   name: string;
@@ -81,17 +81,23 @@ export default function Admin() {
     try {
       setUploading(slot);
       setError("");
-      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
-      const result = await upload(`projects/${slot === "cover" ? "covers" : "videos"}/${Date.now()}-${cleanName}`, file, {
-        access: "public",
-        handleUploadUrl: "/api/upload",
+      if (!supabase) throw new Error("Supabase não está configurado no frontend.");
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ slot, filename: file.name, mimeType: file.type }),
       });
+      const uploadData = await response.json() as { path?: string; token?: string; publicUrl?: string; error?: string };
+      if (!response.ok || !uploadData.path || !uploadData.token || !uploadData.publicUrl) throw new Error(uploadData.error ?? "Não foi possível preparar o upload.");
+      const { error: uploadError } = await supabase.storage.from("hub-media").uploadToSignedUrl(uploadData.path, uploadData.token, file);
+      if (uploadError) throw new Error(uploadError.message);
       if (slot === "cover") {
-        updateForm("coverUrl", result.url);
-        updateForm("coverKey", result.pathname);
+        updateForm("coverUrl", uploadData.publicUrl);
+        updateForm("coverKey", uploadData.path);
       } else {
-        updateForm("videoUrl", result.url);
-        updateForm("videoKey", result.pathname);
+        updateForm("videoUrl", uploadData.publicUrl);
+        updateForm("videoKey", uploadData.path);
       }
       setMessage(slot === "cover" ? "Capa enviada e pronta para o projeto." : "Vídeo enviado e pronto para publicação.");
     } catch (uploadError) {

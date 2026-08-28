@@ -48,3 +48,13 @@
 - [ ] Provisionar o Neon no projeto Vercel correto e testar, no runtime real, cadastro, login, catálogo, criação e exclusão de projetos.
 - [ ] Provisionar o Vercel Blob no projeto Vercel correto e testar uploads autenticados de capa e vídeo pela rota `/api/upload`.
 - [ ] Confirmar a rota serverless `/api/trpc` e os cookies de sessão no deploy Vercel após a criação dos recursos.
+
+- [x] Migrar a camada de persistência do backend Vercel para Supabase PostgreSQL externo.
+- [x] Implementar autenticação de administradores com Supabase Auth e sessão HTTP-only compatível com a API serverless.
+- [x] Configurar o contrato do bucket Supabase Storage e suas políticas RLS para capas e vídeos.
+- [x] Adaptar a rota de upload e o catálogo para URLs do Supabase Storage.
+- [x] Criar script SQL idempotente para tabelas, índices, RLS e políticas do Supabase.
+- [x] Documentar variáveis do Supabase, Vercel e passos de configuração do projeto externo.
+- [x] Validar localmente tipagem, testes e build da integração Supabase.
+- [ ] Inserir as credenciais do projeto Supabase correto nas variáveis da Vercel.
+- [ ] Validar login, catálogo e uploads na URL publicada depois que o usuário configurar o projeto Supabase.
