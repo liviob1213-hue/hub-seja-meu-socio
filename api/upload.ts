@@ -19,3 +19,5 @@ export default async function handler(request: Request): Promise<Response> {
   const publicUrl = admin.storage.from(SUPABASE_MEDIA_BUCKET).getPublicUrl(path).data.publicUrl;
   return response({ path, token: data.token, publicUrl });
 }
+
+export const config = { runtime: "edge" };

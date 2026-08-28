@@ -32,3 +32,5 @@ export default async function handler(request: Request): Promise<Response> {
     return errorResponse(request, error);
   }
 }
+
+export const config = { runtime: "edge" };
