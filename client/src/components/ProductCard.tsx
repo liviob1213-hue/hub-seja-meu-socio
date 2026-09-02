@@ -20,7 +20,7 @@ export function ProductCard({ project, index = 0 }: { project: CatalogProject; i
   return (
     <article 
       className={`product-card ${isComingSoon ? 'product-card--coming-soon' : ''} ${isFeatured ? 'product-card--featured' : ''}`}
-      style={{ "--stagger": `${index * 55}ms`, cursor: isComingSoon ? "default" : "pointer" } as React.CSSProperties}
+      style={{ "--stagger": `${index * 55}ms`, cursor: isComingSoon ? "default" : "pointer", pointerEvents: isComingSoon ? "none" : "auto" } as React.CSSProperties}
       onClick={handleCardClick}
     >
       <div className="product-card__media">
