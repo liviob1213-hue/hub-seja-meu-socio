@@ -35,7 +35,7 @@ async function createContext({ req, resHeaders }: { req: Request; resHeaders: He
 const t = initTRPC.context<VercelContext>().create({ transformer: superjson });
 const protectedProcedure = t.procedure.use(({ ctx, next }) => { if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED", message: "Faça login para continuar." }); return next({ ctx: { ...ctx, user: ctx.user } }); });
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => { if (ctx.user.role !== "admin") throw new TRPCError({ code: "FORBIDDEN", message: "Esta ação exige uma conta de administrador." }); return next(); });
-const projectInput = z.object({ name: z.string().trim().min(2).max(140), description: z.string().trim().min(8).max(2500), price: z.number().finite().min(0).max(999999.99), kind: z.enum(["free", "paid"]), projectUrl: z.string().trim().url(), coverUrl: z.string().trim().url(), coverKey: z.string().trim().min(1).max(500).optional(), mediaKind: z.enum(["image", "video", "iframe"]), videoUrl: z.string().trim().url().optional(), videoKey: z.string().trim().min(1).max(500).optional(), iframeUrl: z.string().trim().url().optional() });
+const projectInput = z.object({ name: z.string().trim().min(2).max(140), description: z.string().trim().min(8).max(2500), price: z.number().finite().min(0).max(999999.99), kind: z.enum(["free", "paid"]), status: z.enum(["normal", "featured", "coming_soon"]).default("normal"), projectUrl: z.string().trim().url(), coverUrl: z.string().trim().url(), coverKey: z.string().trim().min(1).max(500).optional(), mediaKind: z.enum(["image", "video", "iframe"]), videoUrl: z.string().trim().url().optional(), videoKey: z.string().trim().min(1).max(500).optional(), iframeUrl: z.string().trim().url().optional() });
 function fail(error: { message?: string } | null, fallback: string): never { throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error?.message ?? fallback }); }
 
 export const appRouter = t.router({
@@ -65,7 +65,7 @@ export const appRouter = t.router({
   }),
   projects: t.router({
     list: t.procedure.query(async () => {
-      const { data, error } = await getSupabaseAdmin().from("hub_projects").select("id, name, description, price, kind, project_url, cover_url, cover_key, media_kind, video_url, video_key, iframe_url, created_at").order("created_at", { ascending: false });
+      const { data, error } = await getSupabaseAdmin().from("hub_projects").select("id, name, description, price, kind, status, project_url, cover_url, cover_key, media_kind, video_url, video_key, iframe_url, created_at").order("created_at", { ascending: false });
       if (error) fail(error, "Não foi possível carregar o catálogo.");
       return (data ?? []).map((p) => ({ ...p, projectUrl: p.project_url, coverUrl: p.cover_url ?? "", coverKey: p.cover_key, mediaKind: p.media_kind, videoUrl: p.video_url, videoKey: p.video_key, iframeUrl: p.iframe_url, createdAt: p.created_at }));
     }),
@@ -73,7 +73,7 @@ export const appRouter = t.router({
       if (input.kind === "paid" && input.price <= 0) throw new TRPCError({ code: "BAD_REQUEST", message: "Projetos pagos precisam ter um valor maior que zero." });
       if (input.mediaKind === "video" && !input.videoUrl) throw new TRPCError({ code: "BAD_REQUEST", message: "Envie o vídeo de apresentação antes de publicar." });
       if (input.mediaKind === "iframe" && !input.iframeUrl) throw new TRPCError({ code: "BAD_REQUEST", message: "Informe a URL incorporável do vídeo." });
-      const { data, error } = await getSupabaseAdmin().from("hub_projects").insert({ name: input.name, description: input.description, price: input.kind === "free" ? 0 : input.price, kind: input.kind, project_url: input.projectUrl, cover_url: input.coverUrl, cover_key: input.coverKey ?? null, media_kind: input.mediaKind, video_url: input.videoUrl ?? null, video_key: input.videoKey ?? null, iframe_url: input.iframeUrl ?? null, created_by: ctx.user.id }).select("id, name, description, price, kind, project_url, cover_url, cover_key, media_kind, video_url, video_key, iframe_url, created_at").single();
+      const { data, error } = await getSupabaseAdmin().from("hub_projects").insert({ name: input.name, description: input.description, price: input.kind === "free" ? 0 : input.price, kind: input.kind, status: input.status, project_url: input.projectUrl, cover_url: input.coverUrl, cover_key: input.coverKey ?? null, media_kind: input.mediaKind, video_url: input.videoUrl ?? null, video_key: input.videoKey ?? null, iframe_url: input.iframeUrl ?? null, created_by: ctx.user.id }).select("id, name, description, price, kind, status, project_url, cover_url, cover_key, media_kind, video_url, video_key, iframe_url, created_at").single();
       if (error || !data) fail(error, "Não foi possível publicar o projeto.");
       return { ...data, projectUrl: data.project_url, coverUrl: data.cover_url ?? "", coverKey: data.cover_key, mediaKind: data.media_kind, videoUrl: data.video_url, videoKey: data.video_key, iframeUrl: data.iframe_url, createdAt: data.created_at };
     }),

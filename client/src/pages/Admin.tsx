@@ -21,6 +21,7 @@ import {
   type CatalogProject,
   type MediaKind,
   type ProjectKind,
+  type ProjectStatus,
 } from "../lib/catalog";
 import { trpc } from "../lib/trpc";
 import { supabase } from "../lib/supabase";
@@ -31,6 +32,7 @@ type FormData = {
   description: string;
   price: string;
   kind: ProjectKind;
+  status: ProjectStatus;
   projectUrl: string;
   coverUrl: string;
   coverKey?: string;
@@ -45,6 +47,7 @@ const emptyForm: FormData = {
   description: "",
   price: "",
   kind: "paid",
+  status: "normal",
   projectUrl: "",
   coverUrl: "",
   mediaKind: "image",
@@ -167,6 +170,7 @@ export default function Admin() {
           <label className="field field--wide"><span>Nome do projeto</span><input value={form.name} onChange={(event) => updateForm("name", event.target.value)} placeholder="Ex.: Dashboard SaaS para imobiliárias" required /></label>
           <label className="field field--wide"><span>Descrição</span><textarea value={form.description} onChange={(event) => updateForm("description", event.target.value)} placeholder="Explique qual problema o projeto resolve e como pode ser modelado." rows={4} required /></label>
           <fieldset className="field fieldset"><legend>Tipo de acesso</legend><div className="choice-grid"><button type="button" className={form.kind === "paid" ? "choice is-selected" : "choice"} onClick={() => updateForm("kind", "paid")}><span className="choice__dot" /> Pago <small>Tem valor</small></button><button type="button" className={form.kind === "free" ? "choice is-selected" : "choice"} onClick={() => updateForm("kind", "free")}><span className="choice__dot" /> Gratuito <small>Sem custo</small></button></div></fieldset>
+          <fieldset className="field fieldset"><legend>Visibilidade</legend><div className="choice-grid choice-grid--triple"><button type="button" className={form.status === "normal" ? "choice is-selected" : "choice"} onClick={() => updateForm("status", "normal")}><span className="choice__dot" /> Normal</button><button type="button" className={form.status === "featured" ? "choice is-selected" : "choice"} onClick={() => updateForm("status", "featured")}><span className="choice__dot" /> Destaque</button><button type="button" className={form.status === "coming_soon" ? "choice is-selected" : "choice"} onClick={() => updateForm("status", "coming_soon")}><span className="choice__dot" /> Em Breve</button></div></fieldset>
           <label className={`field ${form.kind === "free" ? "is-muted" : ""}`}><span>Valor (R$)</span><input value={form.kind === "free" ? "0,00" : form.price} onChange={(event) => updateForm("price", event.target.value)} placeholder="297,00" inputMode="decimal" disabled={form.kind === "free"} /></label>
           <label className="field field--wide"><span>Link do projeto</span><div className="field__icon"><Link2 size={17} /><input type="url" value={form.projectUrl} onChange={(event) => updateForm("projectUrl", event.target.value)} placeholder="https://lovable.dev/projects/..." required /></div><small>Insira o link de acesso, demo ou checkout do seu projeto.</small></label>
           <div className="field field--wide"><span>Imagem de capa</span><div className={`upload-box ${form.coverUrl ? "is-complete" : ""}`}><span className="upload-box__icon">{uploading === "cover" ? <LoaderCircle className="spin" size={20} /> : <Image size={20} />}</span><span><strong>{form.coverUrl ? "Capa enviada" : "Enviar imagem de capa"}</strong><small>PNG, JPG ou WEBP até 25 MB</small></span><input className="upload-box__file" aria-label="Selecionar imagem de capa" type="file" accept="image/*" onChange={(event) => uploadFile(event, "cover")} /></div>{form.coverUrl && <div className="media-preview"><img src={form.coverUrl} alt="Prévia da capa enviada" /><button type="button" onClick={() => { updateForm("coverUrl", ""); updateForm("coverKey", undefined); }}>Remover capa</button></div>}</div>
@@ -180,7 +184,7 @@ export default function Admin() {
       </section>
       <section className="registered-section" id="projetos-cadastrados">
         <div className="section-label"><span>02</span><div><p className="eyebrow">Curadoria atual</p><h2>Projetos cadastrados</h2></div></div>
-        {projectsQuery.isError ? <div className="manage-error"><p>Não foi possível carregar os projetos cadastrados.</p><button className="button button--outline" onClick={() => projectsQuery.refetch()}>Tentar novamente</button></div> : <div className="manage-list">{projects.map((project) => <article className="manage-item" key={project.id}><div className="manage-item__media">{project.mediaKind === "video" ? <FileVideo size={21} /> : <img src={project.coverUrl} alt="" />}</div><div className="manage-item__copy"><span className={`manage-item__tag manage-item__tag--${project.kind}`}>{project.kind === "free" ? "GRATUITO" : "PAGO"}</span><h3>{project.name}</h3><p>{project.kind === "free" ? "R$ 0,00" : formatCurrency(project.price)}</p></div><a className="manage-item__url" href={project.projectUrl} target="_blank" rel="noreferrer">Abrir projeto <Link2 size={15} /></a><button className="manage-item__delete" onClick={() => deleteMutation.mutate({ id: project.id })} aria-label={`Remover ${project.name}`} disabled={deleteMutation.isPending}><Trash2 size={17} /></button></article>)}</div>}
+        {projectsQuery.isError ? <div className="manage-error"><p>Não foi possível carregar os projetos cadastrados.</p><button className="button button--outline" onClick={() => projectsQuery.refetch()}>Tentar novamente</button></div> : <div className="manage-list">{projects.map((project) => <article className="manage-item" key={project.id}><div className="manage-item__media">{project.mediaKind === "video" ? <FileVideo size={21} /> : <img src={project.coverUrl} alt="" />}</div><div className="manage-item__copy"><div style={{ display: "flex", gap: "6px" }}><span className={`manage-item__tag manage-item__tag--${project.kind}`}>{project.kind === "free" ? "GRATUITO" : "PAGO"}</span>{project.status === "featured" && <span className="manage-item__tag manage-item__tag--featured">DESTAQUE</span>}{project.status === "coming_soon" && <span className="manage-item__tag manage-item__tag--coming-soon">EM BREVE</span>}</div><h3>{project.name}</h3><p>{project.kind === "free" ? "R$ 0,00" : formatCurrency(project.price)}</p></div><a className="manage-item__url" href={project.projectUrl} target="_blank" rel="noreferrer">Abrir projeto <Link2 size={15} /></a><button className="manage-item__delete" onClick={() => deleteMutation.mutate({ id: project.id })} aria-label={`Remover ${project.name}`} disabled={deleteMutation.isPending}><Trash2 size={17} /></button></article>)}</div>}
       </section>
     </section>
   </main>;

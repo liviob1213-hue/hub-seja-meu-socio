@@ -1,4 +1,5 @@
 export type ProjectKind = "free" | "paid";
+export type ProjectStatus = "normal" | "featured" | "coming_soon";
 export type MediaKind = "image" | "video" | "iframe";
 
 export type CatalogProject = {
@@ -7,6 +8,7 @@ export type CatalogProject = {
   description: string;
   price: string | number;
   kind: ProjectKind;
+  status: ProjectStatus;
   projectUrl: string;
   coverUrl: string;
   coverKey: string | null;

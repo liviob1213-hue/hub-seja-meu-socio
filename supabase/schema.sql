@@ -15,6 +15,7 @@ create table if not exists public.hub_projects (
   description text not null check (char_length(description) between 8 and 2500),
   price numeric(12,2) not null default 0 check (price >= 0),
   kind text not null check (kind in ('free', 'paid')),
+  status text not null default 'normal' check (status in ('normal', 'featured', 'coming_soon')),
   project_url text not null,
   cover_url text,
   cover_key text,
