@@ -1,0 +1,96 @@
+/* Seção de solicitação de projetos sob medida — Hub Seja Meu Sócio */
+.request-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: clamp(40px, 7vw, 120px);
+  align-items: start;
+  padding: clamp(68px, 8vw, 120px) clamp(24px, 7vw, 115px);
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+}
+
+.request-section__copy h2 {
+  margin: 0;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(54px, 6.4vw, 96px);
+  font-weight: 700;
+  line-height: 0.84;
+  text-transform: uppercase;
+  letter-spacing: -0.028em;
+}
+
+.request-section__copy h2 em {
+  color: var(--red);
+  font-style: normal;
+}
+
+.request-section__copy > p:not(.eyebrow) {
+  max-width: 460px;
+  margin: 24px 0 0;
+  color: #c5c0b8;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.request-form {
+  display: grid;
+  gap: 17px;
+  padding: clamp(24px, 3.4vw, 42px);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.request-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.request-form__alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 14px;
+  color: #d7f5df;
+  background: rgba(46, 158, 88, 0.16);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.request-form__alert--error {
+  color: #ffd7d5;
+  background: rgba(230, 46, 45, 0.16);
+}
+
+.request-form__submit {
+  justify-self: start;
+}
+
+@media (max-width: 920px) {
+  .request-section {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .request-section {
+    padding: 65px 25px;
+  }
+
+  .request-section__copy h2 {
+    font-size: 52px;
+  }
+
+  .request-form {
+    padding: 22px 17px;
+    box-shadow: 5px 5px 0 rgba(230, 46, 45, 0.9), 8px 10px 20px rgba(0, 0, 0, 0.28);
+  }
+
+  .request-form__row {
+    grid-template-columns: 1fr;
+  }
+}
